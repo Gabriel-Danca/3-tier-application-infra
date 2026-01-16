@@ -111,7 +111,7 @@ resource "aws_instance" "gdanca_control_node" {
   subnet_id                   = aws_subnet.subnet1.id
   vpc_security_group_ids      = [aws_security_group.gdanca_k8s_sg.id]
   associate_public_ip_address = true
-  key_name                    = "gdanca-terraform"
+  key_name                    = "gdanca-3tier"
 
   # user_data = file("script.sh")
 
@@ -127,7 +127,7 @@ resource "aws_instance" "gdanca_worker_node" {
   subnet_id                   = aws_subnet.subnet1.id
   vpc_security_group_ids      = [aws_security_group.gdanca_k8s_sg.id]
   associate_public_ip_address = true
-  key_name                    = "gdanca-terraform"
+  key_name                    = "gdanca-3tier"
 
   #   user_data = file("script.sh")
 
