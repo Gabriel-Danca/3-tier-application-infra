@@ -2,7 +2,7 @@ name: Pipeline to the Moon
 run-name: ${{ github.actor }} is cooking something 🚀
 on: [push, workflow_dispatch]
 jobs:
-  validate-infrastructure:
+  infrastructure-shared:
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -30,7 +30,6 @@ jobs:
         run: terraform fmt -check
       
       - name: Terraform init
-        if: ${{github.event_name == 'push'}}
         run: terraform init
       
       - name: Terraform validate
@@ -45,7 +44,7 @@ jobs:
         if: ${{github.event_name == 'push'}}
         run: terraform apply --auto-approve
 
-      - name: Testing workflow
+      - name: Destroying the infrastructure
         if: ${{github.event_name == 'workflow_dispatch'}}
-        run: echo "Buna"
+        run: terraform destroy --auto-approve
       
