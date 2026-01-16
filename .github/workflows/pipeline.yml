@@ -6,7 +6,7 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: ./Infrastructure/stack
+        working-directory: ./stack
     steps:
       - name: Check out repository code
         uses: actions/checkout@v5
