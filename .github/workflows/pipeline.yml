@@ -1,6 +1,6 @@
 name: Pipeline to the Moon
 run-name: ${{ github.actor }} is cooking something 🚀
-on: [workflow_dispatch]
+on: [push, workflow_dispatch]
 jobs:
   validate-infrastructure:
     runs-on: ubuntu-latest
@@ -39,4 +39,8 @@ jobs:
 
       - name: Terraform apply
         run: terraform apply --auto-approve
+
+      - name: Testing workflow
+        if: ${{github.event_name == 'workflow_dispatch'}}
+        run: echo "Buna"
       
