@@ -53,52 +53,52 @@ jobs:
         run: terraform apply --auto-approve
 
       - name: Destroying the infrastructure
-        if: ${{github.event_name == 'workflow_dispatch'}}
-        run: terraform destroy --auto-approve
-  
-  infrastructure-stack:
-    runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: ./stack
-    steps:
-      - name: Check out repository code
-        uses: actions/checkout@v5
-
-      - name: Configure AWS Credentials
-        uses: aws-actions/configure-aws-credentials@v5
-        with:
-           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-           aws-session-token: ${{ secrets.AWS_SESSION_TOKEN }}
-           aws-region: ${{ secrets.AWS_REGION }}
-      
-      - name: Verify AWS Credentials
-        run: aws sts get-caller-identity
-      
-      - name: Setup Terraform
-        uses: hashicorp/setup-terraform@v3
-      
-      - name: Terraform fmt
-        if: ${{github.event_name == 'push'}}
-        run: terraform fmt -check
-      
-      - name: Terraform init
-        run: terraform init
-      
-      - name: Terraform validate
-        if: ${{github.event_name == 'push'}}
-        run: terraform validate
-      
-      - name: Terraform plan
-        if: ${{github.event_name == 'push'}}
-        run: terraform plan
-
-      - name: Terraform apply
-        if: ${{github.event_name == 'push'}}
-        run: terraform apply --auto-approve
-
-      - name: Destroying the infrastructure
         if: ${{github.event_name == 'workflow_dispatch' && inputs.target == 'shared'}}
         run: terraform destroy --auto-approve
+  
+  # infrastructure-stack:
+  #   runs-on: ubuntu-latest
+  #   defaults:
+  #     run:
+  #       working-directory: ./stack
+  #   steps:
+  #     - name: Check out repository code
+  #       uses: actions/checkout@v5
+
+  #     - name: Configure AWS Credentials
+  #       uses: aws-actions/configure-aws-credentials@v5
+  #       with:
+  #          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+  #          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+  #          aws-session-token: ${{ secrets.AWS_SESSION_TOKEN }}
+  #          aws-region: ${{ secrets.AWS_REGION }}
+      
+  #     - name: Verify AWS Credentials
+  #       run: aws sts get-caller-identity
+      
+  #     - name: Setup Terraform
+  #       uses: hashicorp/setup-terraform@v3
+      
+  #     - name: Terraform fmt
+  #       if: ${{github.event_name == 'push'}}
+  #       run: terraform fmt -check
+      
+  #     - name: Terraform init
+  #       run: terraform init
+      
+  #     - name: Terraform validate
+  #       if: ${{github.event_name == 'push'}}
+  #       run: terraform validate
+      
+  #     - name: Terraform plan
+  #       if: ${{github.event_name == 'push'}}
+  #       run: terraform plan
+
+  #     - name: Terraform apply
+  #       if: ${{github.event_name == 'push'}}
+  #       run: terraform apply --auto-approve
+
+  #     - name: Destroying the infrastructure
+  #       if: ${{github.event_name == 'workflow_dispatch' && inputs.target == 'shared'}}
+  #       run: terraform destroy --auto-approve
       
