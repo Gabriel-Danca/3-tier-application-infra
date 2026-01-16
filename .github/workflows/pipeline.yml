@@ -26,18 +26,23 @@ jobs:
         uses: hashicorp/setup-terraform@v3
       
       - name: Terraform fmt
+        if: ${{github.event_name == 'push'}}
         run: terraform fmt -check
       
       - name: Terraform init
+        if: ${{github.event_name == 'push'}}
         run: terraform init
       
       - name: Terraform validate
+        if: ${{github.event_name == 'push'}}
         run: terraform validate
       
       - name: Terraform plan
+        if: ${{github.event_name == 'push'}}
         run: terraform plan
 
       - name: Terraform apply
+        if: ${{github.event_name == 'push'}}
         run: terraform apply --auto-approve
 
       - name: Testing workflow
